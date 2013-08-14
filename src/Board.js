@@ -58,19 +58,43 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
-      return false; // fixme
+      var count = 0;
+      var result = false;
+
+      _.each(this.rows()[rowIndex], function(value) {
+        count += value;
+      });
+
+      if (count > 1) {
+        result = true;
+      }
+      return result;
     },
 
     hasAnyRowConflicts: function(){
-      return false; // fixme
+      var result = false;
+      for (var i = 0; i < this.attributes.n; i++) {
+        result = result || this.hasRowConflictAt(i);
+      }
+      return result;
     },
 
     hasColConflictAt: function(colIndex){
-      return false; // fixme
+      var count = 0;
+      var result = false;
+      for (var i = 0; i < this.attributes.n; i++) {
+        count += this.rows()[i][colIndex];
+      }
+      if (count > 1) result = true;
+      return result;
     },
 
     hasAnyColConflicts: function(){
-      return false; // fixme
+      var result = false;
+      for (var i = 0; i < this.attributes.n; i++) {
+        result = result || this.hasColConflictAt(i);
+      }
+      return result;
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
