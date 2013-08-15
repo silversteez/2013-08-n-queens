@@ -98,7 +98,28 @@
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      // var yOffset = 0;
+      // while (majorDiagonalColumnIndexAtFirstRow < 0) {
+      //   // make it go up to 0
+      //   majorDiagonalColumnIndexAtFirstRow++;
+      //   yOffset++;
+      // }
+
+      // var count = 0;
+      // var result = false;
+
+      // for (var x = majorDiagonalColumnIndexAtFirstRow; x < this.attributes.n; x++) {
+      //   for ( var y = yOffset; y < this.attributes.n; y++) {
+      //    count += this.rows()[x][y];
+      //   }
+      // }
+
+      // if ( count > 1 ) {
+      //   result = true;
+      // }
+      // return result;
+      //return false;
+      console.log(majorDiagonalColumnIndexAtFirstRow);
     },
 
     hasAnyMajorDiagonalConflicts: function(){
