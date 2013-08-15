@@ -4,22 +4,30 @@
 
 window.findNRooksSolution = function(n){
   var solution = [];
-
   var starter = new Board({'n':n});
+  var testBoard;
 
-  var possibleBoards = function(board, row) {
+  var possibleBoards = function(board, row, legalMoves) {
     var newBoard;
+    var childLegalMoves;
+    legalMoves = legalMoves || _.range(n).map(function() { return 1; });
+
     if( row < n ) {
       for( var i = 0; i < n; i++ ) {
-        newBoard = [];
-        for (var j = 0; j < n; j++) {
-          newBoard.push(board[j].slice());
-        }
-        newBoard[row][i] = 1;
+        if( legalMoves[i] === 1 ) {
+          newBoard = [];
+          childLegalMoves = legalMoves.slice();
 
-        var testBoard = new Board(newBoard)
-        if( !testBoard.hasAnyRooksConflicts()) {
-          possibleBoards(newBoard, row + 1);
+          // Clone board into newBoard
+          for (var j = 0; j < n; j++) {
+            newBoard.push(board[j]);
+          }
+
+          // Set a rook
+          newBoard[row][i] = 1;
+          childLegalMoves[i] = 0;
+
+          possibleBoards(newBoard, row + 1, childLegalMoves);
         }
       }
     } else {
