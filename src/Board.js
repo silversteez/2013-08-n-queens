@@ -98,28 +98,23 @@
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      // var yOffset = 0;
-      // while (majorDiagonalColumnIndexAtFirstRow < 0) {
-      //   // make it go up to 0
-      //   majorDiagonalColumnIndexAtFirstRow++;
-      //   yOffset++;
-      // }
+      var col = 0;
+      var rowStart = majorDiagonalColumnIndexAtFirstRow;
+      while (rowStart < 0) {
+        // make it go up to 0
+        rowStart++;
+        col++;
+      }
 
-      // var count = 0;
-      // var result = false;
+      var count = 0;
 
-      // for (var x = majorDiagonalColumnIndexAtFirstRow; x < this.attributes.n; x++) {
-      //   for ( var y = yOffset; y < this.attributes.n; y++) {
-      //    count += this.rows()[x][y];
-      //   }
-      // }
+      for (var row = rowStart; row < this.attributes.n; row++) {
+        if ( col < this.attributes.n) {
+         count += this.rows()[col++][row];
+       }
+      }
 
-      // if ( count > 1 ) {
-      //   result = true;
-      // }
-      // return result;
-      //return false;
-      console.log(majorDiagonalColumnIndexAtFirstRow);
+      return ( count > 1 );
     },
 
     hasAnyMajorDiagonalConflicts: function(){
@@ -127,7 +122,22 @@
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var col = minorDiagonalColumnIndexAtFirstRow;
+      var rowStart = 0;
+      while (col >= this.attributes.n) {
+        col--;
+        rowStart++;
+      }
+
+      var count = 0;
+
+      for( var row = rowStart; row < this.attributes.n; row ++ ) {
+        if ( col >= 0 ) {
+          count += this.rows()[col--][row];
+        }
+      }
+
+      return ( count > 1 );
     },
 
     hasAnyMinorDiagonalConflicts: function(){
