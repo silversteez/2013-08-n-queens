@@ -50,9 +50,57 @@ window.countNRooksSolutions = function(n){
 };
 
 window.findNQueensSolution = function(n){
-  var solution = undefined; //fixme
+  var solution = [];
+  var starter = new Board({'n':n});
+  var testBoard;
 
-  console.log('Single solution for ' + n + ' queens:', solution);
+  var possibleBoards = function(board, row, colLegalMoves, majorLegalMoves, minorLegalMoves) {
+    var newBoard;
+    var childColLegalMoves, childMajorLegalMoves, childMinorLegalMoves;
+    colLegalMoves = colLegalMoves || _.range(n).map(function() { return 1; });
+    majorLegalMoves = majorLegalMoves || _.range(n).map(function() { return 1; });
+    minorLegalMoves = minorLegalMoves || _.range(n).map(function() { return 1; });
+
+    if( row < n ) {
+      for( var i = 0; i < n; i++ ) {
+        if( colLegalMoves[i] === 1 && majorLegalMoves[i] === 1 && minorLegalMoves[i] === 1 ) {
+          newBoard = [];
+
+          // Slice to creat a copy not reference
+          childColLegalMoves = colLegalMoves.slice();
+          childMajorLegalMoves = majorLegalMoves.slice();
+          childMinorLegalMoves = minorLegalMoves.slice();
+
+          // Clone board into newBoard
+          for (var j = 0; j < n; j++) {
+            newBoard.push(board[j]);
+          }
+
+          // Set a rook
+          newBoard[row][i] = 1;
+          // Invalidate this position for next moves
+          childColLegalMoves[i] = 0;
+
+          // Deal with diagonals
+
+          childMajorLegalMoves.unshift(1);
+          childMajorLegalMoves.pop();
+          childMajorLegalMoves[i+1] = 0;
+
+          childMinorLegalMoves.push(1);
+          childMinorLegalMoves.shift();
+          childMinorLegalMoves[i-1] = 0;
+
+          // Recurse
+          possibleBoards(newBoard, row + 1, childColLegalMoves, childMajorLegalMoves, childMinorLegalMoves);
+        }
+      }
+    } else {
+      solution.push(board);
+    }
+  };
+
+  possibleBoards(starter.rows(), 0);
   return solution;
 };
 
