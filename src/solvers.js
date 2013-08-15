@@ -7,9 +7,6 @@ window.findNRooksSolution = function(n){
 
   var starter = new Board({'n':n});
 
-
-  var possibillities = [];
-
   var possibleBoards = function(board, row) {
     var newBoard;
     if( row < n ) {
@@ -19,24 +16,18 @@ window.findNRooksSolution = function(n){
           newBoard.push(board[j].slice());
         }
         newBoard[row][i] = 1;
-        possibleBoards(newBoard, row + 1);
+
+        var testBoard = new Board(newBoard)
+        if( !testBoard.hasAnyRooksConflicts()) {
+          possibleBoards(newBoard, row + 1);
+        }
       }
     } else {
-      possibillities.push(board);
-    }
-  }
-
-  possibleBoards(starter.rows(), 0);
-
-  _.each(possibillities, function(board) {
-    var result = new Board(board);
-    if (!result.hasAnyRooksConflicts()) {
       solution.push(board);
     }
-  });
+  };
 
-
-  //console.log('Single solution for ' + n + ' rooks:', solution);
+  possibleBoards(starter.rows(), 0);
   return solution;
 };
 
