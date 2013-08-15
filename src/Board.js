@@ -118,7 +118,10 @@
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      return false; // fixme
+      var n = this.attributes.n;
+      return _.range((n-1) * -1, n).some(function(index){
+        return this.hasMajorDiagonalConflictAt(index);
+      }, this);
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
@@ -141,7 +144,10 @@
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      return false; // fixme
+      var n = this.attributes.n;
+      return _.range(0, 2*(n-1)+1).some(function(index) {
+        return this.hasMinorDiagonalConflictAt(index);
+      }, this);
     }
 
   });
