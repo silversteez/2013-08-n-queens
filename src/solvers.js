@@ -16,6 +16,8 @@ window.findNRooksSolution = function(n){
       for( var i = 0; i < n; i++ ) {
         if( legalMoves[i] === 1 ) {
           newBoard = [];
+
+          // Slice to creat a copy not reference
           childLegalMoves = legalMoves.slice();
 
           // Clone board into newBoard
@@ -25,6 +27,7 @@ window.findNRooksSolution = function(n){
 
           // Set a rook
           newBoard[row][i] = 1;
+          // Invalidate this position for next moves
           childLegalMoves[i] = 0;
 
           possibleBoards(newBoard, row + 1, childLegalMoves);
