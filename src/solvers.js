@@ -22,7 +22,7 @@ window.findNRooksSolution = function(n){
 
           // Clone board into newBoard
           for (var j = 0; j < n; j++) {
-            newBoard.push(board[j]);
+            newBoard.push(board[j].slice());
           }
 
           // Set a rook
@@ -43,7 +43,7 @@ window.findNRooksSolution = function(n){
 };
 
 window.countNRooksSolutions = function(n){
-  var solutionCount = findNRooksSolution(n).length; //fixme
+  var solutionCount = findNRooksSolution(n).length;
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -66,14 +66,14 @@ window.findNQueensSolution = function(n){
         if( colLegalMoves[i] === 1 && majorLegalMoves[i] === 1 && minorLegalMoves[i] === 1 ) {
           newBoard = [];
 
-          // Slice to creat a copy not reference
+          // Slice to create a copy not reference
           childColLegalMoves = colLegalMoves.slice();
           childMajorLegalMoves = majorLegalMoves.slice();
           childMinorLegalMoves = minorLegalMoves.slice();
 
           // Clone board into newBoard
           for (var j = 0; j < n; j++) {
-            newBoard.push(board[j]);
+            newBoard.push(board[j].slice());
           }
 
           // Set a rook
@@ -82,7 +82,6 @@ window.findNQueensSolution = function(n){
           childColLegalMoves[i] = 0;
 
           // Deal with diagonals
-
           childMajorLegalMoves.unshift(1);
           childMajorLegalMoves.pop();
           childMajorLegalMoves[i+1] = 0;
@@ -98,9 +97,16 @@ window.findNQueensSolution = function(n){
     } else {
       solution.push(board);
     }
+
   };
 
   possibleBoards(starter.rows(), 0);
+  _.each(solution, function(board, index) {
+    setTimeout(function() {
+      displayBoard(board);
+    }, index*200);
+  });
+
   return solution;
 };
 
@@ -110,7 +116,6 @@ window.countNQueensSolutions = function(n){
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
-
 
 // This function uses a board visualizer lets you view an interactive version of any piece matrix.
 

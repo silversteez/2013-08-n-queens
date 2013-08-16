@@ -73,7 +73,7 @@
 
     hasAnyRowConflicts: function(){
       var result = false;
-      for (var i = 0; i < this.attributes.n; i++) {
+      for (var i = 0; i < this.get('n'); i++) {
         result = result || this.hasRowConflictAt(i);
       }
       return result;
@@ -82,7 +82,7 @@
     hasColConflictAt: function(colIndex){
       var count = 0;
       var result = false;
-      for (var i = 0; i < this.attributes.n; i++) {
+      for (var i = 0; i < this.get('n'); i++) {
         count += this.rows()[i][colIndex];
       }
       if (count > 1) result = true;
@@ -91,7 +91,7 @@
 
     hasAnyColConflicts: function(){
       var result = false;
-      for (var i = 0; i < this.attributes.n; i++) {
+      for (var i = 0; i < this.get('n'); i++) {
         result = result || this.hasColConflictAt(i);
       }
       return result;
@@ -108,8 +108,8 @@
 
       var count = 0;
 
-      for (var row = rowStart; row < this.attributes.n; row++) {
-        if ( col < this.attributes.n) {
+      for (var row = rowStart; row < this.get('n'); row++) {
+        if ( col < this.get('n')) {
          count += this.rows()[col++][row];
        }
       }
@@ -118,7 +118,7 @@
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      var n = this.attributes.n;
+      var n = this.get('n');
       return _.range((n-1) * -1, n).some(function(index){
         return this.hasMajorDiagonalConflictAt(index);
       }, this);
@@ -127,14 +127,14 @@
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
       var col = minorDiagonalColumnIndexAtFirstRow;
       var rowStart = 0;
-      while (col >= this.attributes.n) {
+      while (col >= this.get('n')) {
         col--;
         rowStart++;
       }
 
       var count = 0;
 
-      for( var row = rowStart; row < this.attributes.n; row ++ ) {
+      for( var row = rowStart; row < this.get('n'); row ++ ) {
         if ( col >= 0 ) {
           count += this.rows()[col--][row];
         }
@@ -144,7 +144,7 @@
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      var n = this.attributes.n;
+      var n = this.get('n');
       return _.range(0, 2*(n-1)+1).some(function(index) {
         return this.hasMinorDiagonalConflictAt(index);
       }, this);
