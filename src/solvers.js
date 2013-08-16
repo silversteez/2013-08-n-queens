@@ -39,6 +39,14 @@ window.findNRooksSolution = function(n){
   };
 
   possibleBoards(starter.rows(), 0);
+
+  // Visualize solutions
+  _.each(solution, function(board, index) {
+    setTimeout(function() {
+      displayBoard(board);
+    }, index*200);
+  });
+
   return solution;
 };
 
@@ -101,6 +109,8 @@ window.findNQueensSolution = function(n){
   };
 
   possibleBoards(starter.rows(), 0);
+
+  // Visualize solutions
   _.each(solution, function(board, index) {
     setTimeout(function() {
       displayBoard(board);
